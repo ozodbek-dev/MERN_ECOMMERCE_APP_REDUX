@@ -9,7 +9,11 @@ coverage
 
 # production
 build
+<<<<<<< HEAD
 .env.*
+=======
+.env
+>>>>>>> cdf9d4e (i have been started new ecommerce project so i have been pushed some backend files)
 # misc
 .DS_Store
 .env.local
