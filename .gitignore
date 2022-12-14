@@ -10,7 +10,7 @@ coverage
 # production
 build
 .env
-server/config/*.env
+*.env
 # misc
 .DS_Store
 .env.local
