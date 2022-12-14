@@ -6,7 +6,8 @@ node_modules
 
 # testing
 coverage
-
+# Secret File
+server/config/config.env
 # production
 build
 .env.*
