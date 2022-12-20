@@ -1,4 +1,5 @@
 const express = require("express");
+const { isAuthenticatedUser,atuhorizeRoles } = require("../controllers/auth");
 const {
   getAllProducts,
   createProduct,
@@ -9,11 +10,11 @@ const {
 const router = express.Router();
 
 //Admin routes
-router.route("/product/new").post(createProduct);
+router.route("/product/new").post(isAuthenticatedUser, createProduct);
 router
   .route("/product/:id")
-  .put(updateProduct)
-  .delete(deleteProduct)
+  .put(isAuthenticatedUser,atuhorizeRoles('admin'),updateProduct)
+  .delete(isAuthenticatedUser,atuhorizeRoles('admin'),deleteProduct)
   .get(getProductDetails);
 
 router.route("/products").get(getAllProducts);

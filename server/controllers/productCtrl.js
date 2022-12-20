@@ -6,6 +6,9 @@ const ApiFeatures = require("../utils/api_features_handler.js");
 
 // Create Product --> Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
+
+  req.body.user = req.user._id
+
   const product = await Product.create(req.body);
   resHandler(res, 201, {
     success: true,
@@ -52,7 +55,6 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 .search()
 .filter()
 .paginate(resultPerPage)
-    // .filter();
 
   const products = await apiFeature.query;
   resHandler(res, 200, {
