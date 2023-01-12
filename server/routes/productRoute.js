@@ -6,6 +6,9 @@ const {
   updateProduct,
   deleteProduct,
   getProductDetails,
+  createProductReview,
+  getProductReviews,
+  deleteReview,
 } = require("../controllers/productCtrl");
 const router = express.Router();
 
@@ -19,4 +22,10 @@ router
 
 router.route("/products").get(getAllProducts);
 
+router.route('/review').put(isAuthenticatedUser,createProductReview)
+
+router.route("/reviews").get(getProductReviews).delete(isAuthenticatedUser,deleteReview)
+
 module.exports = router;
+
+// 4:06 min 
