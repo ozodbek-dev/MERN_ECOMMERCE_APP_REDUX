@@ -3,7 +3,7 @@ import { CgMouse } from 'react-icons/cg'
 import { MetaData } from '../layout/MetaData'
 import { HomeContainer } from './Home.element'
 import Product from './Product'
-import { getProduct } from '../../redux/actions/productActions'
+import { clearErrors, getProduct } from '../../redux/actions/productActions'
 import { useDispatch,useSelector } from 'react-redux'
 import Loader from '../layout/loader/Loader'
 import { useAlert } from 'react-alert'
@@ -30,12 +30,13 @@ const Home = () => {
 
   useEffect(()=>{
     if(error){
-      return alert.error(error)
+       alert.error(error)
+       dispatch(clearErrors())
     }
 
     dispatch(getProduct())
 
-  },[dispatch,error])
+  },[dispatch,error,alert])
   return (
     <Fragment>
       {loading ? <Loader/> : 
@@ -72,5 +73,3 @@ const Home = () => {
 }
 
 export default Home
-
-//6:07 product details

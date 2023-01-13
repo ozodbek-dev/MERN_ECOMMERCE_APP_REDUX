@@ -1,39 +1,125 @@
 import { Fragment, useEffect } from 'react'
 import { MetaData } from '../layout/MetaData'
-import { ProductDetailsContainer } from './ProductDetails.element'
-import { getProductDetails } from '../../redux/actions/productActions'
+import { ProductDetailsContainer, Reviews } from './ProductDetails.element'
+import { clearErrors, getProductDetails } from '../../redux/actions/productActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 import { useParams } from 'react-router-dom'
 import Loader from '../layout/loader/Loader'
+import Carousel from 'react-material-ui-carousel'
+import ReactStars from 'react-rating-stars-component'
+import ReviewCard from './ReviewCard'
+
+const starWidth = (windowWidth) => {
+  if (windowWidth < 500) {
+    return 30
+  } else if (windowWidth < 700) {
+    return 15
+  } else if (windowWidth < 1000) {
+    return 20
+  } else return 25
+}
 
 const ProductDetails = () => {
   const alert = useAlert()
   const params = useParams()
   const dispatch = useDispatch()
-  const {loading, error,product} = useSelector(state=>state.productDetails)
+  const { loading, error, product } = useSelector(
+    (state) => state.productDetails,
+  )
 
-  useEffect(()=>{
-
-    if(error){
-      return alert.error(error)
+  useEffect(() => {
+    if (error) {
+       alert.error(error)
+       dispatch(clearErrors())
     }
-    dispatch(getProductDetails(params.id));
+    dispatch(getProductDetails(params.id))
+  }, [dispatch, error,alert,params.id])
 
-  },[dispatch,error])
+  const options = {
+    edit: false,
+    color: 'rgba(20,20,20, .1)',
+    activeColor: 'tomato',
+    size: starWidth(window.innerWidth),
+    value: product.rating,
+    isHalf: true,
+  }
 
   return (
     <Fragment>
-      {
-        !loading ?  <Fragment>
-        <MetaData title={product.name}/>
-        <ProductDetailsContainer>
-          <p>rProduct details</p>
-        </ProductDetailsContainer>
-      </Fragment> : <Loader/>
-      }
+      {loading ? (
+        <Loader />
+      ) : (
+        <Fragment>
+          <MetaData title={product.name} />
+          <ProductDetailsContainer>
+            <div>
+              <Carousel>
+                {product.images &&
+                  product.images.map((img, i) => (
+                    <img
+                      className="CarouselImage"
+                      key={img.img_url}
+                      src={img.img_url}
+                      alt={`${product.name}-${i + 1}-image`}
+                    />
+                  ))}
+              </Carousel>
+            </div>
+            <div>
+              <div className="detailsBlock__1">
+                <h2>{product.name}</h2>
+                <p>Product # {product._id}</p>
+              </div>
+              <div className="detailsBlock__2">
+                <ReactStars {...options} />
+                <span>({product.numOfReviews} Reviews)</span>
+              </div>
+
+              <div className="detailsBlock__3">
+                <h1>${product.price}</h1>
+                <div className="detailsBlock__3_1">
+                  <div className="detailsBlock__3_1-1">
+                    <button>-</button>
+                    <input type="number" value="1" />
+                    <button>+</button>
+                  </div>{' '}
+                  <button>Add To Cart</button>
+                </div>
+
+                <p>
+                  Status:{' '}
+                  <b className={product.stock < 1 ? 'redColor' : 'greenColor'}>
+                    {product.stock < 1 ? 'OutOfStock' : 'InStock'}
+                  </b>
+                </p>
+              </div>
+
+              <div className="detailsBlock__4">
+                Description: <p>{product.desc}</p>
+              </div>
+
+              <button className="submitReview">Submit Review</button>
+            </div>
+        
+          </ProductDetailsContainer>
+          <Reviews>
+              <h3 className="reviewsHeading">REVIEWS</h3>
+
+            {product.reviews && product.reviews[0] ? (
+                <div className="reviews">
+                  {product.reviews.map((review) => (
+                    <ReviewCard review={review} key={review._id} />
+                  ))}
+                </div>
+              ) : (
+                <p className='noReviews'>No Reviews Yet</p>
+              )}
+
+            </Reviews>  
+        </Fragment>
+      )}
     </Fragment>
-   
   )
 }
 
