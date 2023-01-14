@@ -1,7 +1,8 @@
 class ApiFeatures {
-  constructor(query, queryStr) {
+  constructor(query, queryStr,count) {
     this.query = query;
     this.queryStr = queryStr;
+    this.count = count
   }
 
   //searching
@@ -52,6 +53,7 @@ class ApiFeatures {
     const starFrom = resultPerPage * (currentPage - 1); //skipping next page index
 
   this.query = this.query.limit(resultPerPage).skip(starFrom);
+  this.count = this.query;
   
     return this;
   }

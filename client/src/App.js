@@ -8,6 +8,7 @@ import ProductDetails from "./component/Product/ProductDetails";
 import Products from "./component/Product/Products";
 import Search from "./component/Product/Search";
 import { minHeight } from "@mui/system";
+import LoginSignUp from "./component/User/LoginSignUp";
 
 function App() {
   useEffect(() => {
@@ -27,6 +28,8 @@ function App() {
           <Route path="/products/:keyword" element={<Products />} />
           <Route path="/products" element={<Products />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/login" element={<LoginSignUp />} />
+          <Route path="/account" element={<h2>Account</h2>} />
         </Routes>
       </main>
 

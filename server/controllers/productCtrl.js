@@ -47,20 +47,30 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
 
 //Get all products
 exports.getAllProducts = catchAsyncErrors(async (req, res) => {
-  const productCount = await Product.countDocuments();
-
-  const resultPerPage = 10;
+  const resultPerPage = 8;
+  const productsCount = await Product.countDocuments();
 
   const apiFeature = new ApiFeatures(Product.find(), req.query)
 .search()
 .filter()
-.paginate(resultPerPage)
 
-  const products = await apiFeature.query;
+
+
+let products = await apiFeature.query;
+
+const filteredProductsCount = products.length
+
+apiFeature.paginate(resultPerPage)
+
+products = await apiFeature.query.clone()
+console.log("this = " ,filteredProductsCount)
+
   resHandler(res, 200, {
     success: true,
     products,
-    productCount,
+    productsCount,
+    resultPerPage,
+    filteredProductsCount
   });
 });
 
@@ -77,11 +87,11 @@ exports.createProductReview = catchAsyncErrors(async (req,res,next)=>{
 
   const product = await Product.findById(productId);
 
-  const isReviewed = product.reviews.find(rev=>rev.user.toString() === req.user._id.toString() );
+  const isReviewed = product.reviews.find(rev=>rev.user === req.user._id );
 
   if(isReviewed){
     product.reviews.forEach(rev=>{
-      if(rev.user.toString() === req.user._id.toString()){
+      if(rev.user === req.user._id){
         rev.rating = rating;
       rev.comment = comment;
       }

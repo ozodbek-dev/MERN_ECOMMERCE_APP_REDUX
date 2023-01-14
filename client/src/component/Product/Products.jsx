@@ -12,6 +12,7 @@ import {
 } from './ProductDetails.element'
 import Pagination from 'react-js-pagination'
 import { Slider, Typography } from '@mui/material'
+import { MetaData } from '../layout/MetaData'
 
 const categories = [
   'all',
@@ -59,11 +60,12 @@ const Products = () => {
       dispatch(clearErrors())
     }
     dispatch(getProduct(keyword, currentPage, price, category,rating))
-  }, [error, dispatch, keyword, currentPage, price, category,rating])
+  }, [error, dispatch, keyword, currentPage, price, category,rating,alert,error])
 
   console.log(filteredProductsCount && filteredProductsCount)
   return (
     <Fragment>
+      <MetaData title = " PRODUCTS -- ECOMMERCE "/>
       {loading ? (
         <Loader />
       ) : (

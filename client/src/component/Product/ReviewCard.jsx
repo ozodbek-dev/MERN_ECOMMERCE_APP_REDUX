@@ -1,6 +1,7 @@
 import ReactStars from "react-rating-stars-component"
 import { ReviewCardContainer } from "./ProductDetails.element"
 import avatar from "../../images/avatar.png"
+import { MetaData } from "../layout/MetaData"
 
 const starWidth = (windowWidth) => {
   if (windowWidth < 500) {
@@ -26,6 +27,7 @@ const ReviewCard = ({review}) => {
 
   return (
     <ReviewCardContainer>
+    
       <img src={avatar} alt="User" />
       <p>{review.name}</p>
       <ReactStars {...options}/>
