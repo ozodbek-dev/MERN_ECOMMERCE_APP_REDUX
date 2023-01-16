@@ -7,6 +7,7 @@ import {
   PRODUCT_DETAILS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/productConstants";
+import { UPDATE_PASSWORD_REQUEST } from "../constants/userConstants";
 
 export const productReducer = (state = { products: [] }, action) => {
   switch (action.type) {
@@ -42,6 +43,7 @@ export const productReducer = (state = { products: [] }, action) => {
 export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
+    case UPDATE_PASSWORD_REQUEST:
       return {
         loading: true,
         ...state

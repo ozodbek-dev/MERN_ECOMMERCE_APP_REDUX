@@ -56,7 +56,7 @@ const Products = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error)
+      alert.error(error)    
       dispatch(clearErrors())
     }
     dispatch(getProduct(keyword, currentPage, price, category,rating))

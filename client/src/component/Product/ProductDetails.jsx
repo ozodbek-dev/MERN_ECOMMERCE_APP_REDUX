@@ -124,3 +124,7 @@ const ProductDetails = () => {
 }
 
 export default ProductDetails
+
+
+
+// 9:48 product details 

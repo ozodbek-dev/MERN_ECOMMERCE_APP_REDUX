@@ -107,7 +107,8 @@ left: 0;
 
 .shiftToNeutral{
   transform:translateX(0%);
-}
+}DONWLOAD OUR APP
+
 
 .shiftToRight{
   transform:translateX(100%);
@@ -149,4 +150,107 @@ left: 0;
     border-radius: 50%;
   }
 }
+`
+
+
+export const UserOptionsContainer = styled.div`
+.speedDial{
+  position: fixed;
+  right: 3vmax;
+  top: 2vmax;
+}
+.speedDialIcon{
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+border-radius: 100%;
+}
+`
+
+export const ProfileContainer = styled.div`
+  position: fixed;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  padding: 4vmax;
+    top: 0;
+    left: 0;  
+    max-width: 100%;
+    background-color: white;
+    &>div{
+      display: flex;
+      height: 100vh;
+      max-width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &>div:first-child {
+      h1{
+        color: gray;
+        padding: 1vmax;
+        font: 500 2vmax "Roboto";
+      }
+      img{
+        width: 20vmax;
+        height: 20vmax;
+        border-radius: 50%;
+        transition: all .5s ease-in;
+        object-fit: cover;
+        &:hover{
+          transform: scale(1.05);
+          box-shadow: 0 0 3px gray;
+        }
+      }
+     a{
+        border:none;
+        background-color:tomato;
+        font: 400 1vmax "Roboto";
+        transition: all .3s;
+        color:white;
+        text-align: center;
+        margin: 4vmax;
+        width: 30%;
+        text-decoration: none;
+        padding: .5vmax;
+      }
+
+    }
+    &>div:last-child{
+      width: 30vmax;
+      justify-content: space-evenly;
+      padding: 5vmax;
+      box-sizing: border-box;
+      align-items: flex-start;
+      h4{
+        color: black;
+        font:400 1.2vmax "Roboto";
+      }
+      p{
+        color: rgba(0,0,0,0.418);
+        font:400 1vmax cursive;
+        margin:.2vmax;
+      }
+      &>div:last-child{
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        a{
+          border:none;
+          text-decoration: none;
+          text-align: center;
+          transition: all .5s;
+          margin: 1vmax 0;
+          padding: .5vmax;
+          background-color: rgb(68,68,68);
+          font: 600 1vmax "Roboto";
+          color:white;
+          &:hover{
+            background-color: rgb(31,31,31);
+          }
+        }
+      }
+    }
 `

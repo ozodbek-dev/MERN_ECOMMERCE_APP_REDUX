@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 
 const options = {
-  setTimeout:5000,
+  timeout:3000,
   position:positions.BOTTOM_CENTER,
   transition:transitions.FADE
 }

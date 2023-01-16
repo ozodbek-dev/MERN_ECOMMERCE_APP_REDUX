@@ -4,16 +4,23 @@ const ErrorHandler = require("../utils/error_handler");
 const { sendToken } = require("../utils/jwt_token_send");
 const resHandler = require("../utils/response_handler");
 const crypto = require("crypto");
+const cloudinary = require('cloudinary')
 
 const sendEmail = require("../utils/send_email");
 
-//RegisCOOKIE_EXPIREter User
+//Register User
 module.exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+
+  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar,{
+    folder:"avatars",
+    width:150,
+    crop:"scale"
+  })
   const user = await User.create({
     ...req.body,
     avatar: {
-      public_id: "Sample Id",
-      url: "sample Url",
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
     },
   });
 
@@ -59,6 +66,7 @@ module.exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
 
 //forgotPassword
 module.exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
+
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) return next(new ErrorHandler("User not found", 404));
@@ -68,9 +76,7 @@ module.exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
   user.save({ validateBeforeSave: false });
 
-  const resetPasswordUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/api/v1/password/reset/${resetToken}`;
+  const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
   const message = `Your password reset token is: - \n\n ${resetPasswordUrl} \n\n if you  have not requested this email then please ignore it`;
 
@@ -154,13 +160,31 @@ const newUser ={
   name:req.body.name,
   email:req.body.email
 }
-//We will add cloudinary later
+if(req.body.avatar){
+  const user = await User.findById(req.user.id);
 
-const user =await  User.findByIdAndUpdate(req.user.id,newUser,{
+  const imageId = user.avatar.public_id;
+
+  await cloudinary.v2.uploader.destroy(imageId);
+
+  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar,{
+    folder:"avatars",
+    width:300,
+    crop:"scale"
+  })
+
+  newUser.avatar = {
+    public_id:myCloud.public_id,
+    url:myCloud.secure_url
+  }
+}
+
+await  User.findByIdAndUpdate(req.user.id,newUser,{
   new:true,
   runValidators:true,
   useFindAndModify:false,
 })
+
 
 resHandler(res,200,{success:true,msg:"Profile Updated Successsfully"})
 })

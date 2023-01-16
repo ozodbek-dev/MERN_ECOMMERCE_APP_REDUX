@@ -26,22 +26,17 @@ class ApiFeatures {
     //Removing some Fields for category;
     const removeFidelds = ["keyword", "page", "limit"];
 
-    console.log(queryCopy);
 
 
     removeFidelds.forEach((key) => delete queryCopy[key]);
     
-
-    console.log(queryCopy);
     
     let queryStr = JSON.stringify(queryCopy);
     //adding $ symbol for price filter
 
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
 
-
     this.query = this.query.find(JSON.parse(queryStr));
-
 
     return this;
   }

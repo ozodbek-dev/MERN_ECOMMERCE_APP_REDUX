@@ -1,18 +1,18 @@
 import { Face, LockOpen, MailOutline } from '@mui/icons-material'
 import { Fragment, useRef, useState, useEffect } from 'react'
 import { LoginSignUpContainer } from './LoginSignUp.element'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import profile from '../../images/avatar.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 import { clearErrors, login, register } from '../../redux/actions/userAction'
 import Loader from '../layout/loader/Loader'
 
+
 const LoginSignUp = () => {
 const dispatch = useDispatch();
 const alert = useAlert()
 const navigate = useNavigate()
-
 const {loading,error,isAuthenticated} = useSelector(state=>state.user)
 
   const [loginEmail, setLoginEmail] = useState('')
@@ -33,17 +33,6 @@ const {loading,error,isAuthenticated} = useSelector(state=>state.user)
   const switcherTab = useRef(null)
   const registerTab = useRef(null)
   const loginTab = useRef(null)
-
-
-  useEffect( ()=>{
-    if(error){
-      alert.error(error);
-      dispatch(clearErrors())
-    }
-    if(isAuthenticated){
-      navigate("/accunt")
-    }
-  },[error,alert,isAuthenticated,dispatch,navigate])
 
   const switchTabs = (e, tab) => {
     if (tab === 'login') {
@@ -83,16 +72,28 @@ const {loading,error,isAuthenticated} = useSelector(state=>state.user)
       reader.onload = ()=>{
         if(reader.readyState ===2){
           setAvatar(reader.result)
+          setAvatarPreview(reader.result)
         }
       }
-      reader.readasdat(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0])
     }
     else{
       setUser({...user,[e.target.name]:e.target.value})
     }
   }
 
-  
+  useEffect( ()=>{
+    if(error){
+      alert.error(error);
+      dispatch(clearErrors())
+    }
+    if(isAuthenticated){
+      navigate("/account")
+    }
+    else{
+      navigate("/login")
+    }
+  },[error,alert,isAuthenticated,dispatch])
 
   return (
     <Fragment>
