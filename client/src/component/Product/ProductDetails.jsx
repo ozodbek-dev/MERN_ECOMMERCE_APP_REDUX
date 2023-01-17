@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { MetaData } from '../layout/MetaData'
 import { ProductDetailsContainer, Reviews } from './ProductDetails.element'
 import { clearErrors, getProductDetails } from '../../redux/actions/productActions'
@@ -9,6 +9,7 @@ import Loader from '../layout/loader/Loader'
 import Carousel from 'react-material-ui-carousel'
 import ReactStars from 'react-rating-stars-component'
 import ReviewCard from './ReviewCard'
+import { addToCart } from '../../redux/actions/cartAction'
 
 const starWidth = (windowWidth) => {
   if (windowWidth < 500) {
@@ -27,6 +28,29 @@ const ProductDetails = () => {
   const { loading, error, product } = useSelector(
     (state) => state.productDetails,
   )
+
+  const [qty, setQty] = useState(1);
+
+  const incrQty = ()=>{
+    if(product.stock > qty){
+      setQty(prev=>++prev)
+    }
+    else{
+      alert.error("The Product Stock do not enought")
+    }
+    return;
+  }
+  const decrQty = ()=>{
+    if(qty!==1 && qty>0){
+      setQty(prev=>--prev)
+    }
+    return;
+  }
+
+  const addToCartHandler = ()=>{
+    dispatch(addToCart(params.id,qty))
+    alert.success("Product Add To Cart")
+  }
 
   useEffect(() => {
     if (error) {
@@ -80,11 +104,11 @@ const ProductDetails = () => {
                 <h1>${product.price}</h1>
                 <div className="detailsBlock__3_1">
                   <div className="detailsBlock__3_1-1">
-                    <button>-</button>
-                    <input type="number" value="1" />
-                    <button>+</button>
+                    <button onClick={decrQty}>-</button>
+                    <input readOnly type="number" value={qty} />
+                    <button onClick={incrQty}>+</button>
                   </div>{' '}
-                  <button>Add To Cart</button>
+                  <button onClick={addToCartHandler}>Add To Cart</button>
                 </div>
 
                 <p>

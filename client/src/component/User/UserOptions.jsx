@@ -1,4 +1,10 @@
-import { Dashboard, ExitToApp, ListAlt, Person } from '@mui/icons-material'
+import {
+  Dashboard,
+  ExitToApp,
+  ListAlt,
+  Person,
+  ShoppingCart,
+} from '@mui/icons-material'
 import { Backdrop, SpeedDial, SpeedDialAction } from '@mui/material'
 import { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
@@ -14,12 +20,18 @@ const UserOptions = ({ user }) => {
   const [open, setOpen] = useState(false)
 
   const dispatch = useDispatch()
-  const { loading} = useSelector((state) => state.user)
+  const { loading } = useSelector((state) => state.user)
+  const { cartItems } = useSelector((state) => state.cart)
 
   const actions = [
     { icon: <ListAlt />, name: 'Orders', func: orders },
     { icon: <Person />, name: 'Account', func: account },
     { icon: <ExitToApp />, name: 'Logout', func: logOut },
+    {
+      icon: <ShoppingCart />,
+      name: `Cart(${cartItems.length})`,
+      func: cartFunc,
+    },
   ]
 
   if (user.role === 'admin') {
@@ -35,8 +47,16 @@ const UserOptions = ({ user }) => {
   }
 
   function logOut() {
-   navigate('/logout')
-   
+  
+    dispatch(logout())
+
+    setTimeout(() => {
+     return  navigate("/")
+    }, 2000);
+  
+  }
+  function cartFunc() {
+    navigate('/cart')
   }
 
   function dashboard() {
@@ -45,7 +65,9 @@ const UserOptions = ({ user }) => {
 
   return (
     <Fragment>
-      {loading ? <Loader/> : (
+      {loading ? (
+        <Loader />
+      ) : (
         <UserOptionsContainer>
           <Backdrop open={open} />
           <SpeedDial
@@ -68,6 +90,7 @@ const UserOptions = ({ user }) => {
                 icon={action.icon}
                 tooltipTitle={action.name}
                 key={action.name}
+                tooltipOpen
                 onClick={action.func}
               />
             ))}

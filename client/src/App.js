@@ -26,6 +26,7 @@ import Loader from "./component/layout/loader/Loader";
 import UpadatePassword from "./component/User/UpadatePassword";
 import ForgotPassword from "./component/User/ForgotPassword";
 import ResetPassword from "./component/User/ResetPassword";
+import Cart from "./component/Cart/Cart";
 
 function App() {
   const { isAuthenticated, user, loading } = useSelector((state) => state.user);
@@ -36,7 +37,6 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
-
     store.dispatch(loadUser());
   }, []);
   return (
@@ -54,6 +54,8 @@ function App() {
           <Route path="/login" element={<LoginSignUp />} />
           <Route path="/password/forgot" element={<ForgotPassword />} />
           <Route path="/password/reset/:token" element={<ResetPassword />} />
+          <Route path="/cart" element={<Cart />} />
+          
           // protected routes
           <Route
             path="/account"
@@ -100,7 +102,6 @@ function App() {
           )} */}
         </Routes>
       </main>
-
       <Footer />
     </Router>
   );

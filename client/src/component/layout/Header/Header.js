@@ -1,24 +1,30 @@
 import logo from "../../../images/logo.png";
 import { Backdrop, SpeedDial, SpeedDialAction } from "@mui/material";
-import { HeaderContainer } from "./Header.element";
+import { CartBtn, HeaderContainer } from "./Header.element";
 import { useState } from "react";
-import CottageIcon from '@mui/icons-material/Cottage';
+import CottageIcon from "@mui/icons-material/Cottage";
 import { Login, Menu, Search } from "@mui/icons-material";
-import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
+
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import { useNavigate } from "react-router-dom";
+import Cart from "../../Cart/Cart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const {cartItems} = useSelector(state=>state.cart)
   const actions = [
     { icon: <CottageIcon />, name: "Home", func: homeFunc },
     {
-      icon: <ProductionQuantityLimitsIcon />,
+      icon: <FormatListNumberedIcon />,
       name: "Products",
       func: productFunc,
     },
     { icon: <Search />, name: "Search", func: searchFunc },
     { icon: <Login />, name: "Login", func: loginFunc },
+    { icon: <ShoppingCartIcon />, name: "Cart", func: cartFunc },
   ];
 
   function loginFunc() {
@@ -36,19 +42,30 @@ const Header = () => {
   function searchFunc() {
     navigate("/search");
   }
+  function cartFunc() {
+    navigate("/cart");
+  }
   return (
     <HeaderContainer>
+      {cartItems.length ? (
+        <CartBtn to="/cart">
+          <ShoppingCartIcon />
+          <span>{cartItems.length}</span>
+        </CartBtn>
+      ):null}
+
       <Backdrop open={open} />
+
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
-        direction="right"
+        direction="down"
         open={open}
         className="navMenu"
         icon={
           <span className="navbtnicon">
-            <Menu/>
+            <Menu />
           </span>
         }
       >
@@ -58,6 +75,8 @@ const Header = () => {
             key={action.name}
             onClick={action.func}
             tooltipTitle={action.name}
+            tooltipOpen={true}
+            tooltipPlacement="right"
           />
         ))}
       </SpeedDial>

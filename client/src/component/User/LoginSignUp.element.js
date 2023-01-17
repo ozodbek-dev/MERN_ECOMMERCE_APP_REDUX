@@ -107,7 +107,7 @@ left: 0;
 
 .shiftToNeutral{
   transform:translateX(0%);
-}DONWLOAD OUR APP
+}
 
 
 .shiftToRight{
@@ -154,6 +154,8 @@ left: 0;
 
 
 export const UserOptionsContainer = styled.div`
+position: relative;
+z-index: 10000;
 .speedDial{
   position: fixed;
   right: 3vmax;
