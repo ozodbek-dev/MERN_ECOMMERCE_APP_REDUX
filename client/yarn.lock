@@ -1901,6 +1901,18 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@stripe/react-stripe-js@^1.16.3":
+  version "1.16.3"
+  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.16.3.tgz#25bbc2f2ef1fdaf01298e0ca4a9a9bd85a7d635a"
+  integrity sha512-gS6UDGEuM92K50pFB3o//EqqPxmaqpC8IrsBda4P4LxeULoO0pBFSHXJ5Ab6uA7G2lyO2bluvSLereh0OH9GrQ==
+  dependencies:
+    prop-types "^15.7.2"
+
+"@stripe/stripe-js@^1.46.0":
+  version "1.46.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.46.0.tgz#2b9acca0dfa7b90aaecd909e678a049f799a27d6"
+  integrity sha512-dkm0zCEoRLu5rTnsIgwDf/QG2DKcalOT2dk1IVgMySOHWTChLyOvQwMYhEduGgLvyYWTwNhAUV4WOLPQvjwLwA==
+
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-2.2.3.tgz#ee34985952ca21558ab0d952f00298ad2190c053"
@@ -3597,6 +3609,11 @@ cosmiconfig@^7.0.0:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.10.0"
+
+country-state-city@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/country-state-city/-/country-state-city-3.1.2.tgz#8b155a1bb17aaf03bac4193382e59c161f74f063"
+  integrity sha512-qpzY7GyzqgJsx5TQUak0ryhbMcn1bLN1mgQc37EWkJMOEbszrAMowjzmisnf8ybhLBnbesZ1LK3KTc7SUX1T1w==
 
 cross-env@^7.0.3:
   version "7.0.3"
@@ -8060,11 +8077,6 @@ react-material-ui-carousel@^3.4.2:
     "@mui/material" "^5.4.1"
     "@mui/system" "^5.4.1"
     framer-motion "^4.1.17"
-
-react-rating-stars-component@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-rating-stars-component/-/react-rating-stars-component-2.2.0.tgz#e947c6a1f59278e6fea1098453f43cb15d077c14"
-  integrity sha512-A3lgLxumfFQQicKQmxacZ91fq/zRaVWlCPnVodJmJV6obvod4/yCotetN9WuyBiUfnKsEFDBo/8B85ocwmL7ng==
 
 react-redux@^8.0.5:
   version "8.0.5"

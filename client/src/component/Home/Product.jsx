@@ -1,26 +1,15 @@
 import React from 'react'
 import { ProductContainer } from './Home.element'
-import ReactStarts from 'react-rating-stars-component'
+import { Rating } from '@mui/material'
 
-const starWidth = (windowWidth) => {
-  if (windowWidth < 500) {
-    return 30
-  } else if (windowWidth < 700) {
-    return 15
-  } else if (windowWidth < 1000) {
-    return 20
-  } else return 25
-}
 
 
 function Product({ product }) {
   const options = {
-    edit: false,
-    color: 'rgba(20,20,20, .1)',
-    activeColor: 'tomato',
-    size:  starWidth(window.innerWidth),
     value: product.rating,
-    isHalf: true,
+    size:"large",
+    readOnly:true,
+    precision:0.5
   }
   
   return (
@@ -28,7 +17,7 @@ function Product({ product }) {
       <img src={product.images[0].img_url} alt={product.name} />
       <p>{product.name}</p>
       <div>
-        <ReactStarts {...options} />
+        <Rating {...options} className="star"/>
         <span>({product.reviews.length} reviews)</span>
       </div>
       <span className="price"> ${product.price}</span>

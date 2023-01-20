@@ -1,3 +1,4 @@
+require('dotenv').config({path:"server/config/config.env"})
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
@@ -7,6 +8,7 @@ const errorMiddleware = require('./middleware/error')
 const productRouter = require('./routes/productRoute');
 const userRouter = require('./routes/userRoute')
 const orderRouter = require('./routes/orderRoutes')
+const paymentRouter = require('./routes/paymentRoute')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
 
@@ -20,6 +22,7 @@ app.use(fileUpload())
 app.use("/api/v1",productRouter)
 app.use("/api/v1",userRouter)
 app.use("/api/v1",orderRouter)
+app.use('/api/v1',paymentRouter)
 
 // Middleware for errors 
 app.use(errorMiddleware);

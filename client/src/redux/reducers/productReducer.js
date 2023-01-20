@@ -5,7 +5,10 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
-  CLEAR_ERRORS,
+  CLEAR_ERRORS,  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  NEW_REVIEW_RESET,
+  NEW_REVIEW_FAIL,
 } from "../constants/productConstants";
 import { UPDATE_PASSWORD_REQUEST } from "../constants/userConstants";
 
@@ -68,3 +71,37 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
   }
 };
 
+export const newReviewReducer = (state = {}, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case NEW_REVIEW_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case NEW_REVIEW_SUCCESS:
+      return {
+        loading: false,
+        success: payload,
+      };
+    case NEW_REVIEW_RESET:
+      return {
+       ...state,
+        success: false,
+      };
+    case NEW_REVIEW_FAIL:
+      return {
+        loading: false,
+        error: payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};

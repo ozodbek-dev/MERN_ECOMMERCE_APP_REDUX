@@ -12,6 +12,7 @@ import Loader from '../layout/loader/Loader'
 const LoginSignUp = () => {
 const dispatch = useDispatch();
 const alert = useAlert()
+const location = useLocation()
 const navigate = useNavigate()
 const {loading,error,isAuthenticated} = useSelector(state=>state.user)
 
@@ -82,18 +83,17 @@ const {loading,error,isAuthenticated} = useSelector(state=>state.user)
     }
   }
 
+  const redirect =location.search ? location.search.split("=")[1] : "";
+
   useEffect( ()=>{
     if(error){
       alert.error(error);
       dispatch(clearErrors())
     }
     if(isAuthenticated){
-      navigate("/account")
+      navigate(`/${redirect}`)
     }
-    else{
-      navigate("/login")
-    }
-  },[error,alert,isAuthenticated,dispatch])
+  },[error,alert,isAuthenticated,dispatch,redirect, navigate])
 
   return (
     <Fragment>

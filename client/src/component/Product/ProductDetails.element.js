@@ -1,3 +1,4 @@
+import { DialogContent } from "@mui/material";
 import styled from "styled-components";
 
 export const ProductDetailsContainer = styled.div`
@@ -56,10 +57,7 @@ export const ProductDetailsContainer = styled.div`
     border-bottom: 1px solid rgba(0, 0, 0, 0.213);
     width: 70%;
     padding: 1vmax 0;
-    & > span {
-      color: rgba(54, 54, 54, 0.6);
-      font: 300 0.6vmax cursive;
-    }
+   
   }
   .detailsBlock__3 {
     width: 70%;
@@ -168,6 +166,7 @@ export const Reviews = styled.div`
     text-align: center;
     padding: 20px;
   }
+
 `;
 
 export const ReviewCardContainer = styled.div`
@@ -198,11 +197,6 @@ export const ReviewCardContainer = styled.div`
     -webkit-box-orient: vertical;
     color: rgba(0, 0, 0, 0.826);
     font: 600 0.9vmax "Roboto";
-    padding: 10px;
-  }
-  & > span {
-    color: rgba(0, 0, 0, 0.426);
-    font: 300 0.8vmax cursive;
     padding: 10px;
   }
 `;
@@ -308,3 +302,16 @@ background-color: white;
     margin-bottom: 2rem;
   }
 `;
+
+
+export const StyledDialogContent = styled(DialogContent)`
+display: flex;
+flex-direction: column;
+textarea{
+  border: 1px solid rgba(0,0,0,.1);
+  margin: 1vmax 0 ;
+  padding: 1rem;
+  outline:none;
+  font: 300 1rem "Roboto";
+}
+`

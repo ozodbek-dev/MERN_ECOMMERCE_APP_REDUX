@@ -10,7 +10,7 @@ const location = useLocation()
     <Fragment>
       {!loading && (
         <Fragment>
-          {isAuthenticated ? children : <Navigate to="/login" state={{from:location}} replace={true} />}
+          {isAuthenticated === false ? <Navigate to="/login" state={{from:location}} replace={true} /> : children }
         </Fragment>
       )}
     </Fragment>

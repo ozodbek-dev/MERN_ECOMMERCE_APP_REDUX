@@ -1,7 +1,7 @@
 import { RemoveShoppingCart } from '@mui/icons-material'
 import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { addToCart,removeItemFromCart } from '../../redux/actions/cartAction'
 import { MetaData } from '../layout/MetaData'
 import { CartContainer, EmptyCart } from './Cart.element'
@@ -11,7 +11,7 @@ import CartItem from './CartItem'
 function Cart() {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart)
-  
+  const navigate = useNavigate()
   const incrQty = (id,qty,stock)=>{
     qty++;
     if(stock<qty){
@@ -32,7 +32,10 @@ function Cart() {
   const deleteItem = (id)=>{
     dispatch(removeItemFromCart(id))
   }
-
+  
+const checkOutHanlder = ()=>{
+  navigate('/login?redirect=shipping')
+}
 
   return (
     <Fragment>
@@ -65,7 +68,7 @@ function Cart() {
               </div>
               <div></div>
               <div className="checkOutBtn">
-                <button>Chek Out</button>
+                <button onClick={checkOutHanlder}>Chek Out</button>
               </div>
             </div>
           </div>

@@ -25,8 +25,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     taxPrice,
     shippingPrice,
     paidAt:Date.now(),
-    user:req.user._id,
-
+    user:req.user._id
   })
 
   resHandler(res,201,{success:true,order})

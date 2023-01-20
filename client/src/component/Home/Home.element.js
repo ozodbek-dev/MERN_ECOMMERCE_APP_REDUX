@@ -83,6 +83,10 @@ export const ProductContainer = styled(Link)`
     box-shadow: 0 0 5px rgba(15, 15, 15, 0.26);
     transform: translateY(-1vmax);
   }
+  &>p{
+    margin: .5vmax;
+
+  }
   & > span {
     margin: 0.5vmax;
     color: tomato;
@@ -90,24 +94,28 @@ export const ProductContainer = styled(Link)`
     sans-serif;
     font-size: 1vmax;
     font-weight:bold ;
+    margin: .5vmax;
+
   }
   img {
     width: 14vmax;
   }
-  div {
-    margin-right:.3vmax ;
+  div {       
+
+    margin: .5vmax;
     display: flex;
     justify-content: flex-start;
     flex-wrap:wrap;
     align-items: center;
-    span {
-      font: 300 1vmax "Roboto";
-    }
+   .star{
+    font: 300 1.5vmax  "Roboto";
+   }
     p {
       font-family: "Roboto", sans-serif;
       font-size: 1.2vmax;
       margin: 1vmax 0.5vmax;
       margin-bottom: 0;
+      
     }
   }
 

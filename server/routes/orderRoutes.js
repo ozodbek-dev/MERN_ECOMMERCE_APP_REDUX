@@ -15,8 +15,8 @@ router.route("/orders/me").get(isAuthenticatedUser, myOrders);
 
 // --Admin
 router
-  .route("/or der/:id")
-  .get(isAuthenticatedUser, atuhorizeRoles("admin"), getSingleOrder);
+  .route("/order/:id")
+  .get(isAuthenticatedUser, getSingleOrder);
 
 router
   .route("/admin/orders")
@@ -29,4 +29,3 @@ router
 
 module.exports = router;
 
-// 4:43 =>Starting Front end;
