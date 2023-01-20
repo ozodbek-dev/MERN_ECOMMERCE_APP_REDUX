@@ -9,7 +9,7 @@ import { Backdrop, SpeedDial, SpeedDialAction } from '@mui/material'
 import { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate , RedirectFunction} from 'react-router-dom'
 import { logout } from '../../redux/actions/userAction'
 import Loader from '../layout/loader/Loader'
 import { UserOptionsContainer } from './LoginSignUp.element'
@@ -47,20 +47,15 @@ const UserOptions = ({ user }) => {
   }
 
   function logOut() {
-  
     dispatch(logout())
-
-    setTimeout(() => {
-     return  navigate("/")
-    }, 2000);
-  
+    return <Navigate to="/login"/> 
   }
   function cartFunc() {
     navigate('/cart')
   }
 
   function dashboard() {
-    navigate('/dashboard')
+    navigate('/admin/dashboard')
   }
 
   return (

@@ -5,16 +5,21 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
-  CLEAR_ERRORS,  NEW_REVIEW_REQUEST,
+  CLEAR_ERRORS,
+  NEW_REVIEW_REQUEST,
   NEW_REVIEW_SUCCESS,
   NEW_REVIEW_RESET,
   NEW_REVIEW_FAIL,
+  ALL_PRODUCT_REQUEST_ADMIN,
+  ALL_PRODUCT_SUCCESS_ADMIN,
+  ALL_PRODUCT_FAIL_ADMIN,
 } from "../constants/productConstants";
 import { UPDATE_PASSWORD_REQUEST } from "../constants/userConstants";
 
 export const productReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case ALL_PRODUCT_REQUEST:
+    case ALL_PRODUCT_REQUEST_ADMIN:
       return {
         loading: true,
         products: [],
@@ -25,9 +30,15 @@ export const productReducer = (state = { products: [] }, action) => {
         products: action.payload.products,
         productsCount: action.payload.productsCount,
         resultPerPage: action.payload.resultPerPage,
-        filteredProductsCount:action.payload.filteredProductsCount
+        filteredProductsCount: action.payload.filteredProductsCount,
+      };
+    case ALL_PRODUCT_SUCCESS_ADMIN:
+      return {
+        loading: false,
+        products: action.payload,
       };
     case ALL_PRODUCT_FAIL:
+    case ALL_PRODUCT_FAIL_ADMIN:
       return {
         loading: false,
         error: action.payload,
@@ -42,14 +53,13 @@ export const productReducer = (state = { products: [] }, action) => {
   }
 };
 
-
 export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
     case UPDATE_PASSWORD_REQUEST:
       return {
         loading: true,
-        ...state
+        ...state,
       };
     case PRODUCT_DETAILS_SUCCESS:
       return {
@@ -87,7 +97,7 @@ export const newReviewReducer = (state = {}, action) => {
       };
     case NEW_REVIEW_RESET:
       return {
-       ...state,
+        ...state,
         success: false,
       };
     case NEW_REVIEW_FAIL:
@@ -105,3 +115,5 @@ export const newReviewReducer = (state = {}, action) => {
       return state;
   }
 };
+
+//ADMIN REDUCERS

@@ -38,6 +38,18 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({ success: true, msg: "Procuct Deleted successfully!" });
 });
 
+//Get all products --> Admin
+exports.getAllProductsAdmin = catchAsyncErrors(async (req, res) => {
+
+  const products = await Product.find(); 
+
+  resHandler(res, 200, {
+    success: true,
+    products
+  });
+});
+
+/////////////////////
 //get Product Details
 exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req.params.id);

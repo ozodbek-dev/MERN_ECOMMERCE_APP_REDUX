@@ -12,7 +12,6 @@ export const MyOrdersContainer = styled.div`
   flex-direction: column;
   left: 0;
   top: 0;
-
   #myOrdersHeading {
     text-align: center;
     font: 400 1.2vmax "Roboto";
