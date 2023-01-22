@@ -13,7 +13,15 @@ import {
   NEW_REVIEW_FAIL,
   ALL_PRODUCT_REQUEST_ADMIN,
   ALL_PRODUCT_SUCCESS_ADMIN,
-  ALL_PRODUCT_FAIL_ADMIN,
+  ALL_PRODUCT_FAIL_ADMIN,  NEW_PROD_REQ_ADMIN,
+  NEW_PROD_SUCC_ADMIN,
+  NEW_PROD_FAIL_ADMIN,
+  DEL_PROD_REQ_ADMIN,
+  DEL_PROD_SUCC_ADMIN,
+  DEL_PROD_FAIL_ADMIN,
+  UPD_PROD_REQ_ADMIN,
+  UPD_PROD_SUCC_ADMIN,
+  UPD_PROD_FAIL_ADMIN,
 } from "../constants/productConstants";
 
 //get Products
@@ -93,6 +101,68 @@ export const newReview = (reviewData) => async (dispatch) => {
     });
   }
 };
+
+// create product --> Admin
+export const createProductAdmin  = (prodData) => async (dispatch) => {
+  try {
+    dispatch({ type: NEW_PROD_REQ_ADMIN });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    const { data } = await axios.post(`/api/v1/product/new`, prodData, config);
+
+    dispatch({ type: NEW_PROD_SUCC_ADMIN, payload: data });
+  } catch (err) {
+    dispatch({
+      type: NEW_PROD_FAIL_ADMIN,
+      payload: err.response.data.msg,
+    });
+  }
+};
+
+// delete product --> Admin
+export const deleteProductAdmin  = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DEL_PROD_REQ_ADMIN })
+
+    const { data } = await axios.delete(`/api/v1/product/${id}`);
+
+    dispatch({ type: DEL_PROD_SUCC_ADMIN, payload: data.success });
+  } catch (err) {
+    dispatch({
+      type: DEL_PROD_FAIL_ADMIN,
+      payload: err.response.data.msg,
+    });
+  }
+};
+
+
+// update product --> Admin
+export const updateProductAdmin  = (id,updatedData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPD_PROD_REQ_ADMIN });
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    const { data } = await axios.put(`/api/v1/product/${id}`, updatedData, config);
+
+    dispatch({ type: UPD_PROD_SUCC_ADMIN, payload: data.success });
+  } catch (err) {
+    dispatch({
+      type: UPD_PROD_FAIL_ADMIN,
+      payload: err.response.data.msg,
+    });
+  }
+};
+
 
 //clearing errors
 export const clearErrors = () => async (dispatch) => {

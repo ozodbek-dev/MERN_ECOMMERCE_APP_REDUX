@@ -18,32 +18,58 @@ function MyOrders() {
 
   const rows = []
   const columns = [
-    { field: 'id', headerName: 'Order ID', minWidth:300 , flex:1},
-    { field: 'status', headerName: 'Status', minWidth:150 , flex:.5, cellClassName:(params)=>{
-      return params.getValue(params.id, "status") === "Delivered" ? "greenColor":"redColor"
-    }},
-    { field: 'itemsQty', headerName: 'Items Qty', type:Number, minWidth:150, flex:.3 },
-    { field: 'amount', headerName: 'Amount', type:Number, minWidth:270, flex:.5 },
-    { field: 'Actions', headerName: 'Actions',  minWidth:150, type:Number,flex:.3, sortable:false, 
-    renderCell:(params)=>{
-      return(
-        <Link to={`/order/${params.getValue(params.id,"id")}`}>
-          <Launch/>
-        </Link>
-      )
-    }
-  },
-
+    { field: 'id', headerName: 'Order ID', minWidth: 300, flex: 1 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      minWidth: 150,
+      flex: 0.5,
+      cellClassName: (params) => {
+        return params.getValue(params.id, 'status') === 'Delivered'
+          ? 'greenColor'
+          : 'redColor'
+      },
+    },
+    {
+      field: 'itemsQty',
+      headerName: 'Items Qty',
+      type: Number,
+      minWidth: 150,
+      flex: 0.3,
+    },
+    {
+      field: 'amount',
+      headerName: 'Amount',
+      type: Number,
+      minWidth: 270,
+      flex: 0.5,
+    },
+    {
+      field: 'Actions',
+      headerName: 'Actions',
+      minWidth: 150,
+      type: Number,
+      flex: 0.3,
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <Link to={`/order/${params.getValue(params.id, 'id')}`}>
+            <Launch />
+          </Link>
+        )
+      },
+    },
   ]
 
-  orders && orders.forEach((order,i) => {
-    rows.push({
-      itemsQty:order.orderItems.length,
-      id:order._id,
-      status:order.orderStatus,
-      amount:order.totalPrice
+  orders &&
+    orders.forEach((order, i) => {
+      rows.push({
+        itemsQty: order.orderItems.length,
+        id: order._id,
+        status: order.orderStatus,
+        amount: order.totalPrice,
+      })
     })
-  });
 
   useEffect(() => {
     if (error) {

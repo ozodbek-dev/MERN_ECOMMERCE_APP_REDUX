@@ -2,49 +2,54 @@ import React, { Fragment, useEffect } from 'react'
 import { MetaData } from '../../layout/MetaData'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   ProductListContainer,
   ProductsListContainer,
-} from './ProducstsList.element'
+} from '../Product/ProducstsList.element'
 import { Button, Typography } from '@mui/material'
 import { Edit, Delete } from '@mui/icons-material'
 import Sidebar from '../Sidebar/Sidebar'
 import { DataGrid } from '@mui/x-data-grid'
-import {
-  clearErrors,
-  getAdminProduct,
-  deleteProductAdmin
-} from '../../../redux/actions/productActions'
-import { DEL_PROD_RESET_ADMIN } from '../../../redux/constants/productConstants'
+import { deleteOrderAdmin, clearErrors,getAllOrdersAdmin } from '../../../redux/actions/orderAction'
+import { DELETE_ORDER_RESET } from '../../../redux/constants/orederConstants'
 
-function ProductsList() {
+function Orders() {
   const dispatch = useDispatch()
   const alert = useAlert();
   const navigate = useNavigate()
-  const {  error, products } = useSelector((state) => state.products)
+  const {  error, orders } = useSelector((state) => state.allOrders)
   
-  const {  error:delError, isDeleted } = useSelector((state) => state.productAdmin)
-  
-  const deleteProdHandler = (id)=>{
-    dispatch(deleteProductAdmin(id))
+  const {  error:delError, isDeleted } = useSelector((state) => state.orderAdmin)
+  const deleteOrderHandler = (id)=>{
+    dispatch(deleteOrderAdmin(id))
   }
 
   const cols = [
-    { field: 'id', headerName: 'Product ID', minWidth: 200, flex: 1 },
-    { field: 'name', headerName: 'Name', minWidth: 200, flex: 1 },
+{ field: 'id', headerName: 'Order ID', minWidth: 300, flex: 1 },
     {
-      field: 'stock',
-      headerName: 'Stock',
+      field: 'status',
+      headerName: 'Status',
       minWidth: 150,
-      flex: 0.3,
-      type: 'number',
+      flex: 0.5,
+      cellClassName: (params) => {
+        return params.getValue(params.id, 'status') === 'Delivered'
+          ? 'greenColor'
+          : 'redColor'
+      },
     },
     {
-      field: 'price',
-      headerName: 'Price',
-      minWidth: 200,
-      type: 'number',
+      field: 'itemsQty',
+      headerName: 'Items Qty',
+      type: Number,
+      minWidth: 150,
+      flex: 0.3,
+    },
+    {
+      field: 'amount',
+      headerName: 'Amount',
+      type: Number,
+      minWidth: 270,
       flex: 0.5,
     },
     {
@@ -57,10 +62,10 @@ function ProductsList() {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/admin/product/${params.getValue(params.id, 'id')}`}>
+            <Link to={`/admin/order/${params.getValue(params.id, 'id')}`}>
               <Edit />
             </Link>
-            <Button color="error" onClick={()=>deleteProdHandler(params.getValue(params.id, "id"))}>
+            <Button color="error" onClick={()=>deleteOrderHandler(params.getValue(params.id, "id"))}>
               <Delete />
             </Button>
           </Fragment>
@@ -72,13 +77,13 @@ function ProductsList() {
   const rows = []
 
 
-  products &&
-    products.forEach((prod) => {
+  orders &&
+    orders.forEach((order) => {
       rows.push({
-        id: prod._id,
-        stock: prod.stock,
-        price: prod.price,
-        name: prod.name,
+        itemsQty: order.orderItems.length,
+        id: order._id,
+        status: order.orderStatus,
+        amount: order.totalPrice,
       })
     })
 
@@ -95,20 +100,20 @@ function ProductsList() {
     }
 
     if(isDeleted){
-      alert.success("Product Deleted Successfully!")
-      dispatch({type:DEL_PROD_RESET_ADMIN})
-      navigate('/admin/dashboard')
+      alert.success("Order Deleted Successfully!")
+      dispatch({type:DELETE_ORDER_RESET})
+      navigate('/admin/orders')
     }
 
-    dispatch(getAdminProduct())
+    dispatch(getAllOrdersAdmin())
   }, [error, dispatch, alert, isDeleted,delError])
   return (
     <Fragment>
-      <MetaData title="Admin -- Products" />
+      <MetaData title="Admin -- Orders" />
       <ProductsListContainer>
         <Sidebar />
         <div className="container">
-          <Typography component={'h1'}>ALL PRODUCTS</Typography>
+          <Typography component={'h1'}>ALL Orders</Typography>
 
           <ProductListContainer>
             <DataGrid
@@ -125,4 +130,4 @@ function ProductsList() {
   )
 }
 
-export default ProductsList
+export default Orders

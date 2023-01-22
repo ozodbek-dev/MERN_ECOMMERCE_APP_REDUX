@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { DashboardContainer } from './Dashboard.element'
 import Sidebar from './Sidebar/Sidebar'
@@ -12,10 +12,14 @@ import {
   Title,
   Tooltip,
   Legend,
-  ArcElement
+  ArcElement,
 } from 'chart.js'
 import { Doughnut, Line } from 'react-chartjs-2'
 import { MetaData } from '../layout/MetaData'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  getAdminProduct,
+} from '../../redux/actions/productActions'
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -24,22 +28,21 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ArcElement
+  ArcElement,
 )
 
 function Dashboard() {
- const lineChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Line Chart',
-      },
-    },
-  };
+  const dispatch = useDispatch()
+  const { products } = useSelector((state) => state.products)
+
+  let outOfStock = 0
+  products &&
+    products.forEach((prod) => {
+      if (prod.stock === 0) {
+        outOfStock += 1
+      }
+    })
+
   const lineState = {
     labels: ['Initial Amount', 'Amount Earned'],
     datasets: [
@@ -52,20 +55,24 @@ function Dashboard() {
     ],
   }
 
-  const doughnutState={
-    labels:["Out of Stock","InStock"],
-    datasets:[
+  const doughnutState = {
+    labels: ['Out of Stock', 'InStock'],
+    datasets: [
       {
-        backgroundColor: ['#00a6b4',"#6800b4"],
-        hoverBackgroundColor: ['#4b5000',"#35014f"],
-        data: [2, 10],
-      }
-    ]
+        backgroundColor: ['#00a6b4', '#6800b4'],
+        hoverBackgroundColor: ['#4b5000', '#35014f'],
+        data: [outOfStock, products.length - outOfStock],
+      },
+    ],
   }
+
+  useEffect(() => {
+    dispatch(getAdminProduct())
+  }, [dispatch])
 
   return (
     <Fragment>
-      <MetaData title="Admin -- Dashboard"/>
+      <MetaData title="Admin -- Dashboard" />
       <DashboardContainer>
         <Sidebar />
         <div className="container">
@@ -78,8 +85,8 @@ function Dashboard() {
             </div>
             <div className="dashboardSummaryBox2">
               <Link to="/admin/products">
-                <p>Product</p>
-                <p>50</p>
+                <p>Products</p>
+                <p>{products && products.length}</p>
               </Link>
 
               <Link to="/admin/orders">
@@ -98,7 +105,7 @@ function Dashboard() {
           </div>
 
           <div className="doughnutChart">
-            <Doughnut  data={doughnutState} />
+            <Doughnut data={doughnutState} />
           </div>
         </div>
       </DashboardContainer>

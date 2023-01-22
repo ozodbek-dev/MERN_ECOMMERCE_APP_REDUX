@@ -14,7 +14,7 @@ const {
 const router = express.Router();
 
 //Admin routes
-router.route("/product/new").post(isAuthenticatedUser, createProduct);
+router.route("/product/new").post(isAuthenticatedUser,atuhorizeRoles("admin"),  createProduct);
 router
   .route("/product/:id")
   .put(isAuthenticatedUser, atuhorizeRoles("admin"), updateProduct)
