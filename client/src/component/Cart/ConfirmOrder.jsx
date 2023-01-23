@@ -113,6 +113,3 @@ const proceedToPayment = ()=>{
 }
 
 export default ConfirmOrder
-
-
-// 11:08

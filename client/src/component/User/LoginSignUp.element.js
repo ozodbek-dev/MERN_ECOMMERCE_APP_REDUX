@@ -57,7 +57,7 @@ left: 0;
    &>div{
     width: 100%;
     position: relative;
-    input{
+    input, select{
       padding: 1vmax 4vmax;
       padding-right: 1vmax;
       width: 100%;
@@ -66,6 +66,10 @@ left: 0;
       border-radius: 4px;
       font:300 0.9vmax cursive;
       outline:none;
+      &:focus + svg{
+      color:tomato;
+      transform: scale(1.1);
+    }
     }
  
     svg{
@@ -76,10 +80,7 @@ left: 0;
       color:rgba(0,0,0,0.678);
       transform: all .1s ease;
     }
-    input:focus + svg{
-      color:tomato;
-      transform: scale(1.1);
-    }
+   
    }
 }
 .loginForm {

@@ -240,6 +240,10 @@ module.exports.deleteUser = catchAsyncErrors(async (req,res,next)=>{
     return next(ErrorHandler(`User Does not exist`));
   }
 
+  const imageId = user.avatar.public_id;
+  await cloudinary.v2.uploader.destroy(imageId)
+  
+
  await user.remove()
   
   resHandler(res,200,{success:true,msg:"Profile Deleted Successsfully"})

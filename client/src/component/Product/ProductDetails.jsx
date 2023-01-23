@@ -48,8 +48,12 @@ const ProductDetails = () => {
   }
 
   const addToCartHandler = ()=>{
-    dispatch(addToCart(params.id,qty))
-    alert.success("Product Add To Cart")
+   if(product.stock <=0 ){
+    alert.error("Sorry , this Product out of stock!")
+    return;
+   }
+   dispatch(addToCart(params.id,qty))
+   alert.success("Product Add To Cart")
   }
 
 
@@ -130,7 +134,7 @@ const ProductDetails = () => {
                     <input readOnly type="number" value={qty} />
                     <button onClick={incrQty}>+</button>
                   </div>{' '}
-                  <button onClick={addToCartHandler}>Add To Cart</button>
+                  <button  onClick={addToCartHandler}>Add To Cart</button>
                 </div>
 
                 <p>

@@ -20,6 +20,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   getAdminProduct,
 } from '../../redux/actions/productActions'
+import { getAllOrdersAdmin } from '../../redux/actions/orderAction'
+import { getAllUsersAdmin } from '../../redux/actions/userAction'
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -34,6 +36,9 @@ ChartJS.register(
 function Dashboard() {
   const dispatch = useDispatch()
   const { products } = useSelector((state) => state.products)
+  const { users } = useSelector((state) => state.allUsersAdmin)
+
+  const { orders } = useSelector((state) => state.allOrders)
 
   let outOfStock = 0
   products &&
@@ -68,6 +73,9 @@ function Dashboard() {
 
   useEffect(() => {
     dispatch(getAdminProduct())
+    dispatch(getAllOrdersAdmin())
+    dispatch(getAllUsersAdmin())
+
   }, [dispatch])
 
   return (
@@ -91,12 +99,12 @@ function Dashboard() {
 
               <Link to="/admin/orders">
                 <p>Orders</p>
-                <p>4</p>
+                <p>{orders && orders.length}</p>
               </Link>
 
               <Link to="/admin/users">
                 <p>Users</p>
-                <p>2 </p>
+                <p>{users && users.length} </p>
               </Link>
             </div>
           </div>

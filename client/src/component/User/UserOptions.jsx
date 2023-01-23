@@ -47,8 +47,8 @@ const UserOptions = ({ user }) => {
   }
 
   function logOut() {
+    navigate("/")
     dispatch(logout())
-    return <Navigate to="/login"/> 
   }
   function cartFunc() {
     navigate('/cart')

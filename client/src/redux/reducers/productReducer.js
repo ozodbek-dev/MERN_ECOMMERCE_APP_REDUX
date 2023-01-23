@@ -131,7 +131,6 @@ export const newReviewReducer = (state = {}, action) => {
 //ADMIN REDUCERS
 export const newProductReducerAdmin = (state = { product: {} }, action) => {
   const { type, payload } = action;
-
   switch (type) {
     case NEW_PROD_REQ_ADMIN:
       return {

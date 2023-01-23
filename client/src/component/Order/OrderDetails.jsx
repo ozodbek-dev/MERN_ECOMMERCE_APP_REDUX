@@ -17,7 +17,7 @@ function OrderDetails() {
   useEffect(() => {
     if (error) {
       alert.error(error)
-      dispatch(clearErrors)
+      dispatch(clearErrors())
     }
 
     console.log(params.id)

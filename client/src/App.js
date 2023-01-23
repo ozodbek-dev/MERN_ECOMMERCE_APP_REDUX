@@ -41,6 +41,10 @@ import ProductsList from "./component/Admin/Product/ProductsList";
 import { NewProduct } from "./component/Admin/Product/NewProduct";
 import UpadateProduct from "./component/Admin/Product/UpadateProduct";
 import Orders from "./component/Admin/Orders/Orders";
+import ProcessOrder from "./component/Admin/Orders/ProcessOrder";
+import Users from "./component/Admin/Users/Users";
+import UpdateUser from "./component/Admin/Users/UpdateUser";
+import ReviewsAdmin from "./component/Admin/Reviews/ReviewsAdmin";
 function App() {
   const { isAuthenticated, user, loading } = useSelector((state) => state.user);
 
@@ -51,7 +55,7 @@ function App() {
     setStripeApikey(data.stripeApiKey);
   }
 
-  getStripeApiKey();
+  isAuthenticated && getStripeApiKey();
 
   useEffect(() => {
     webfont.load({
@@ -194,14 +198,46 @@ function App() {
               </ProtectedRoute>
             }
           />
-            <Route
-              path="*"
-              element={
-                <>
-                  <Navigate to="/" replace />
-                </>
-              }
-            />
+          <Route
+            path="/admin/order/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ProcessOrder />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <Users />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/user/:id"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UpdateUser />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/reviews"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <ReviewsAdmin />
+              </ProtectedRoute>
+            }
+          />
+          {/* <Route
+            path="*"
+            element={
+              <>
+                <Navigate to="/" replace />
+              </>
+            }
+          /> */}
         </Routes>
       </main>
 
@@ -223,5 +259,7 @@ function Logout() {
     </>
   );
 }
+
+//14 53 
 
 export default App;
