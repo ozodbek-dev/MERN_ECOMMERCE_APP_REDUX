@@ -15,7 +15,6 @@ import {
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAIL,
   UPDATE_PROFILE_RESET,
-  LOGOUT_REQUEST,
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_FAIL,
   UPDATE_PASSWORD_RESET,
@@ -60,16 +59,11 @@ export const userReducer = (state = { user: {} }, action) => {
         isAuthenticated: true,
         user: action.payload,
       };
-    case LOGOUT_REQUEST:
-      return {
-        ...state,
-        loading: true,
-      };
     case LOGOUT_SUCCESS: {
+      console.log(action.payload)
       return {
         loading: false,
         user: null,
-        msg: action.payload.msg,
         isAuthenticated: false,
       };
     }
@@ -78,7 +72,6 @@ export const userReducer = (state = { user: {} }, action) => {
       return {
         loading: false,
         user: null,
-        isAuthenticated: false,
         error: action.payload,
       };
     case LOAD_USER_FAIL:

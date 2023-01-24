@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import { MetaData } from '../../layout/MetaData'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   ProductListContainer,
   ProductsListContainer,

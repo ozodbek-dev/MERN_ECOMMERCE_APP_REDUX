@@ -25,6 +25,13 @@ import {
   UPD_PROD_SUCC_ADMIN,
   UPD_PROD_FAIL_ADMIN,
   UPD_PROD_RESET_ADMIN,
+  ALL_REVIEW_REQUEST_ADMIN,
+  ALL_REVIEW_SUCCESS_ADMIN,
+  ALL_REVIEW_FAIL_ADMIN,
+  DEL_REVIEW_REQUEST_ADMIN,
+  DEL_REVIEW_SUCCESS_ADMIN,
+  DEL_REVIEW_RESET_ADMIN,
+  DEL_REVIEW_FAIL_ADMIN,
 } from "../constants/productConstants";
 import { UPDATE_PASSWORD_REQUEST } from "../constants/userConstants";
 
@@ -208,6 +215,69 @@ export const productReducerAdmin = (state = {}, action) => {
         error: null,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const productReviewsReducerAdmin = (state = { reviews: [] }, action) => {
+  switch (action.type) {
+    case ALL_REVIEW_REQUEST_ADMIN:
+      return {
+        loading: true,
+        ...state,
+      };
+    case ALL_REVIEW_SUCCESS_ADMIN:
+      return {
+        loading: false,
+        reviews: action.payload,
+      };
+    case ALL_REVIEW_FAIL_ADMIN:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const reviewReducerAdmin = (state = {}, action) => {
+  switch (action.type) {
+    case DEL_REVIEW_REQUEST_ADMIN:
+      return {
+        ...state,
+        loading: true,
+        isDeleted: false,
+      };
+    case DEL_REVIEW_SUCCESS_ADMIN:
+      return {
+        loading: false,
+        isDeleted: action.payload,
+      };
+    case DEL_REVIEW_RESET_ADMIN:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: false,
+      };
+    case DEL_REVIEW_FAIL_ADMIN:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }

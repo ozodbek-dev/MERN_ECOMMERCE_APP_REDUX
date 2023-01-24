@@ -87,7 +87,7 @@ const ProductDetails = () => {
   }, [dispatch, error,alert,params.id, reviewError,success])
 
   const options = {
-    value: product.rating,
+    value:  product &&  product.rating,
     size:"large",
     readOnly:true,
     precision:0.5

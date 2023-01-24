@@ -48,6 +48,12 @@ function Dashboard() {
       }
     })
 
+    let totalAmount = 0;
+    orders && orders.forEach(order=>{
+      totalAmount += order.totalPrice;
+    })
+  
+
   const lineState = {
     labels: ['Initial Amount', 'Amount Earned'],
     datasets: [
@@ -55,7 +61,7 @@ function Dashboard() {
         label: 'TOTAL AMOUNT',
         backgroundColor: ['tomato'],
         hoverBackgroundColor: ['rgb(197,72,49)'],
-        data: [0, 4000],
+        data: [0, totalAmount],
       },
     ],
   }
@@ -78,6 +84,7 @@ function Dashboard() {
 
   }, [dispatch])
 
+
   return (
     <Fragment>
       <MetaData title="Admin -- Dashboard" />
@@ -88,7 +95,7 @@ function Dashboard() {
           <div className="dashboardSummary">
             <div>
               <p>
-                Total Ammount <br /> $2000
+                Total Ammount <br /> $ {totalAmount}
               </p>
             </div>
             <div className="dashboardSummaryBox2">

@@ -19,7 +19,7 @@ router
   .route("/product/:id")
   .put(isAuthenticatedUser, atuhorizeRoles("admin"), updateProduct)
   .delete(isAuthenticatedUser, atuhorizeRoles("admin"), deleteProduct)
-  .get(isAuthenticatedUser, atuhorizeRoles("admin"), getProductDetails);
+  .get(getProductDetails);
 
 router.route("/admin/products").get(isAuthenticatedUser, atuhorizeRoles("admin"),getAllProductsAdmin);
 
@@ -31,7 +31,7 @@ router.route("/review").put(isAuthenticatedUser, createProductReview);
 router
   .route("/reviews")
   .get(getProductReviews)
-  .delete(isAuthenticatedUser, deleteReview);
+  .delete(isAuthenticatedUser,atuhorizeRoles("admin"), deleteReview);
 
 module.exports = router;
 

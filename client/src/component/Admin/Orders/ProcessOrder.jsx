@@ -5,7 +5,7 @@ import { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, Link, useParams } from 'react-router-dom'
+import {  Link, useParams } from 'react-router-dom'
 import {
   clearErrors,
   getOrderDetails,
@@ -19,7 +19,6 @@ import { DashboardContainer } from '../Dashboard.element'
 import Sidebar from '../Sidebar/Sidebar'
 
 function ProcessOrder() {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const alert = useAlert()
   const params = useParams()
@@ -30,10 +29,9 @@ function ProcessOrder() {
     (state) => state.orderAdmin,
   )
 
-  const { user } = useSelector((state) => state.user)
   const [status, setStatus] = useState('')
 
-  const proceedToPayment = () => {}
+
 
   const changeOrderProcessHandler = (e) => setStatus(e.target.value)
   const changeProcessSubmit = (e) => {
@@ -81,7 +79,7 @@ function ProcessOrder() {
                   <div className="box">
                     <div>
                       <p>Name:</p>
-                      <span>{order.user && order.user.name}</span>
+                      <span>{order?.user && order.user.name}</span>
                     </div>
                     <div>
                       <p>Phone:</p>

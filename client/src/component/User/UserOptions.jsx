@@ -6,17 +6,15 @@ import {
   ShoppingCart,
 } from '@mui/icons-material'
 import { Backdrop, SpeedDial, SpeedDialAction } from '@mui/material'
-import { Fragment, useEffect, useState } from 'react'
-import { useAlert } from 'react-alert'
+import { Fragment, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, Navigate , RedirectFunction} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { logout } from '../../redux/actions/userAction'
 import Loader from '../layout/loader/Loader'
 import { UserOptionsContainer } from './LoginSignUp.element'
 
 const UserOptions = ({ user }) => {
   const navigate = useNavigate()
-  const alert = useAlert()
   const [open, setOpen] = useState(false)
 
   const dispatch = useDispatch()
@@ -47,8 +45,8 @@ const UserOptions = ({ user }) => {
   }
 
   function logOut() {
-    navigate("/")
     dispatch(logout())
+    navigate("/")
   }
   function cartFunc() {
     navigate('/cart')

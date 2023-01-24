@@ -14,10 +14,8 @@ import {
   UPDATE_PROFILE_REQUEST,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAIL,
-  LOGOUT_REQUEST,
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_FAIL,
-  UPDATE_PASSWORD_RESET,
   UPDATE_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_REQUEST,
   FORGOT_PASSWORD_FAIL,
@@ -94,8 +92,9 @@ export const loadUser = () => async (dispatch) => {
 //LOGOUT USER
 export const logout = () => async (dispatch) => {
   try {
+
     const { data } = await axios.get(`/api/v1/logout`);
-    dispatch({ type: LOGOUT_SUCCESS, payload: data });
+    dispatch({ type: LOGOUT_SUCCESS, payload: data.success });
 
   } catch (err) {
     dispatch({ type: LOGOUT_FAIL, payload: err.response.data.msg });
@@ -178,7 +177,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 
     const { data } = await axios.put(
       `/api/v1/password/reset/${token}`,
-      passwords
+      passwords,config
     );
     dispatch({ type: RESET_PASSWORD_SUCCESS, payload: data.success });
   } catch (err) {

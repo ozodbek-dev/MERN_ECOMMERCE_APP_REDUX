@@ -4,9 +4,6 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate,
-  useLocation,
-  useNavigate,
 } from "react-router-dom";
 import webfont from "webfontloader";
 import Footer from "./component/layout/Footer/Footer";
@@ -16,13 +13,12 @@ import Products from "./component/Product/Products";
 import Search from "./component/Product/Search";
 import LoginSignUp from "./component/User/LoginSignUp";
 import store from "./redux/store";
-import { loadUser, logout } from "./redux/actions/userAction";
+import { loadUser } from "./redux/actions/userAction";
 import UserOptions from "./component/User/UserOptions";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Profile from "./component/User/Profile";
 import UpdateProfile from "./component/User/UpdateProfile";
 import ProtectedRoute from "./Route/ProtectedRoute";
-import Loader from "./component/layout/loader/Loader";
 import UpadatePassword from "./component/User/UpadatePassword";
 import ForgotPassword from "./component/User/ForgotPassword";
 import ResetPassword from "./component/User/ResetPassword";
@@ -45,8 +41,10 @@ import ProcessOrder from "./component/Admin/Orders/ProcessOrder";
 import Users from "./component/Admin/Users/Users";
 import UpdateUser from "./component/Admin/Users/UpdateUser";
 import ReviewsAdmin from "./component/Admin/Reviews/ReviewsAdmin";
+import NotFound from "./component/layout/NotFound/NotFound";
+
 function App() {
-  const { isAuthenticated, user, loading } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
 
   const [stripeApiKey, setStripeApikey] = useState("");
 
@@ -55,7 +53,6 @@ function App() {
     setStripeApikey(data.stripeApiKey);
   }
 
-  isAuthenticated && getStripeApiKey();
 
   useEffect(() => {
     webfont.load({
@@ -64,7 +61,10 @@ function App() {
       },
     });
     store.dispatch(loadUser());
+    isAuthenticated && getStripeApiKey();
   }, []);
+
+  // window.addEventListener('contextmenu',e=>e.preventDefault())
   return (
     <Router>
       <Header />
@@ -158,7 +158,9 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+       {
+        user && user.role === 'admin' && <>
+           <Route
             path="/admin/dashboard"
             element={
               <ProtectedRoute isAdmin={true}>
@@ -229,15 +231,14 @@ function App() {
                 <ReviewsAdmin />
               </ProtectedRoute>
             }
-          />
-          {/* <Route
-            path="*"
+          /></>
+       }
+          <Route
+          path="*"
             element={
-              <>
-                <Navigate to="/" replace />
-              </>
+            <NotFound/>
             }
-          /> */}
+          />
         </Routes>
       </main>
 
@@ -246,20 +247,6 @@ function App() {
   );
 }
 
-function Logout() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(logout());
-    navigate("/");
-  }, []);
-  return (
-    <>
-      <Loader />
-    </>
-  );
-}
 
-//14 53 
 
 export default App;

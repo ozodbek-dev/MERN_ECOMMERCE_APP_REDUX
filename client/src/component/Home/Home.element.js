@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 export const HomeContainer = styled.div`
   .banner {
-    background-image: linear-gradient(to right, #635dc0, #3027ae);
+    background:linear-gradient(0deg, rgba(2,2,2,0.5), rgba(2,173,231,0.5)), url(https://images.unsplash.com/photo-1612103147485-8c8de055942b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80); 
+    background-size:cover ;
     height: 100vmin;
     display: flex;
     text-align: center;

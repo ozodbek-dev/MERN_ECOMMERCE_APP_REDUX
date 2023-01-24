@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-
+import cursorImage from "./images/cursor.png"
 export const GlobalStyles = createGlobalStyle`
  *{
         scroll-behavior: smooth;
@@ -17,5 +17,7 @@ export const GlobalStyles = createGlobalStyle`
         font-weight: 600!important;
         color:green!important;
       }
-
+      body{
+        cursor:url(${cursorImage}), auto;
+      }
 `;
