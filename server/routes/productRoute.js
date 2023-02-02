@@ -35,4 +35,5 @@ router
 
 module.exports = router;
 
-// 4:06 min
+
+// Fixing bugs and deploy project
